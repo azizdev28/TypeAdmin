@@ -9,7 +9,7 @@ import DashSidebar from "./components/DashSidebar";
 import Students from "./pages/Students";
 import Teachers from "./pages/Teachers";
 import AddStudents from "./pages/AddStudents";
-import EditStudents from "./pages/EditStudents";
+// import EditStudents from "./pages/EditStudents";
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ const App = () => {
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="addstudent" element={<AddStudents />} />
-            <Route path="editstudents" element={<EditStudents />} />
+            {/* <Route path="editstudents" element={<EditStudents />} /> */}
             <Route path="profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
