@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { Button, Table } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom"; // useNavigate import qilinadi
-import useStudent from "../app/useStudent";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button, Select, Table, TextInput } from "flowbite-react";
+import useStudent, { Student } from "../app/useStudent";
 
-const Students = () => {
-  const navigate = useNavigate(); // useNavigate hookini ishlatish
-
+const Students: React.FC = () => {
   const { loading, error, students, getStudents } = useStudent();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedGroup, setSelectedGroup] = useState<string>("");
 
   useEffect(() => {
     getStudents();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number): Promise<void> => {
     try {
       // Perform delete operation
       await fetch(`http://localhost:3000/students/${id}`, {
@@ -25,15 +25,33 @@ const Students = () => {
     }
   };
 
-  const handleEdit = (id) => {
-    // Redirect to edit student page with the student ID
-    navigate(`/editstudent/${id}`); // navigate funktsiyasidan foydalanish
-  };
+  const filteredStudents = students.filter(
+    (student: Student) =>
+      student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (selectedGroup === "" || student.group === selectedGroup)
+  );
 
   return (
     <div>
       {loading ? <h2>Loading...</h2> : null}
-      {students.length > 0 ? (
+      <div className="flex justify-between p-3">
+        <TextInput
+          type="text"
+          placeholder="Search by name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <Select
+          value={selectedGroup}
+          onChange={(e) => setSelectedGroup(e.target.value)}
+        >
+          <option value="">All Groups</option>
+          <option value="React N32">React N32</option>
+          <option value="React N25">React N25</option>
+          <option value="React N2">React N2</option>
+        </Select>
+      </div>
+      {filteredStudents.length > 0 ? (
         <Table hoverable>
           <Table.Head>
             <Table.HeadCell>Name</Table.HeadCell>
@@ -44,7 +62,7 @@ const Students = () => {
             <Table.HeadCell>Delete</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {students.map((student) => (
+            {filteredStudents.map((student: Student) => (
               <Table.Row
                 key={student.id}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -54,12 +72,12 @@ const Students = () => {
                 <Table.Cell>{student.email}</Table.Cell>
                 <Table.Cell>{student.group}</Table.Cell>
                 <Table.Cell>
-                  <button
-                    onClick={() => handleEdit(student.id)}
+                  <Link
+                    to={`/editstudent/${student.id}`}
                     className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                   >
                     Edit
-                  </button>
+                  </Link>
                 </Table.Cell>
                 <Table.Cell>
                   <button
