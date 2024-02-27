@@ -1,11 +1,11 @@
-import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
-import { CgProfile } from 'react-icons/cg';
-import { Link } from 'react-router-dom';
+import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
+// import { CgProfile } from 'react-icons/cg';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const isLoggedIn = true;
   const avatarUrl =
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
 
   return (
     <div className="w-full">

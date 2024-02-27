@@ -50,7 +50,7 @@ const AddStudents: React.FC = () => {
         group: "A",
       });
     } catch (error: string) {
-      console.error("Error adding student:", error.message);
+      console.error("Error adding student:");
     }
   };
 
