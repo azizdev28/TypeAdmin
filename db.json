@@ -1,0 +1,34 @@
+{
+  "students": [
+    {
+      "id": "46138",
+      "name": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "d803",
+      "name": "Azizbek",
+      "username": "ID10403",
+      "email": "bayof25625@jalunaki.com",
+      "group": "B"
+    },
+    {
+      "id": "6a86",
+      "name": "Aziz",
+      "username": "Azizbek02",
+      "email": "az1z.bakht1yarvich@gmail.com",
+      "group": "B"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "41245",
+      "name": "Tom Smith",
+      "username": "tomsmith",
+      "email": "tomsmith@gmail.com",
+      "level": "senior"
+    }
+  ]
+}
