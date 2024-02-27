@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Select, Table, TextInput } from "flowbite-react";
 // import useStudent, { Student } from "../app/useStudent";
-import useStudent, { Student } from "../app/useStudent";
+import useStudent from "../app/useStudent";
+import { StudentType } from "../types/Student.type";
 
 const Students: React.FC = () => {
   const { loading, error, students, getStudents } = useStudent();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedGroup, setSelectedGroup] = useState<string>("");
-  const [editingStudent, setEditingStudent] = useState<Student | null>(null);
+  const [editingStudent, setEditingStudent] = useState<StudentType | null>(
+    null
+  );
   const [editedName, setEditedName] = useState<string>("");
   const [editedUserName, setEditedUserName] = useState<string>("");
   const [editedEmail, setEditedEmail] = useState<string>("");
@@ -31,7 +34,7 @@ const Students: React.FC = () => {
     }
   };
 
-  const handleEdit = (student: Student) => {
+  const handleEdit = (student: StudentType) => {
     setEditingStudent(student);
     setEditedName(student.name);
     setEditedUserName(student.username);
@@ -66,7 +69,7 @@ const Students: React.FC = () => {
   };
 
   const filteredStudents = students.filter(
-    (student: Student) =>
+    (student: StudentType) =>
       student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedGroup === "" || student.group === selectedGroup)
   );
@@ -102,7 +105,7 @@ const Students: React.FC = () => {
             <Table.HeadCell>Delete</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {filteredStudents.map((student: Student) => (
+            {filteredStudents.map((student: StudentType) => (
               <Table.Row
                 key={student.id}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"

@@ -49,7 +49,7 @@ const AddStudents: React.FC = () => {
         email: "",
         group: "A",
       });
-    } catch (error: string) {
+    } catch (error) {
       console.error("Error adding student:");
     }
   };
