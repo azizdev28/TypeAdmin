@@ -1,26 +1,26 @@
 import { Alert, Button, Label, Select, TextInput } from "flowbite-react";
 import { useState, FormEvent } from "react";
-import { StudentInfo } from "../types/Student.type";
+import { TeacherInfo } from "../types/Teacher.type";
 import { useNavigate } from "react-router-dom";
 import { useFormik, FormikProps } from "formik";
 
-type StudentFormType = {
-  initialValues: StudentInfo;
-  validate: (values: StudentInfo) => {
+type TeacherFormType = {
+  initialValues: TeacherInfo;
+  validate: (values: TeacherInfo) => {
     name: string;
     username: string;
     email: string;
   };
-  onSubmit: (value: StudentInfo) => void;
+  onSubmit: (value: TeacherInfo) => void;
 };
 
-const AddStudents = () => {
-  const formik: FormikProps<StudentInfo> = useFormik<StudentInfo>({
+const AddTeachers = () => {
+  const formik: FormikProps<TeacherInfo> = useFormik<TeacherInfo>({
     initialValues: {
       name: "",
       email: "",
       username: "",
-      group: "React N32",
+      level: "Middle",
     },
     validate: (values) => {
       const errors: {
@@ -45,7 +45,7 @@ const AddStudents = () => {
       }
       return errors;
     },
-  } as StudentFormType);
+  } as TeacherFormType);
 
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -61,7 +61,7 @@ const AddStudents = () => {
         setErrorMsg("Please fill all required fields");
       } else {
         setErrorMsg("");
-        const response = await fetch("http://localhost:3000/students", {
+        const response = await fetch("http://localhost:3000/teachers", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -76,9 +76,9 @@ const AddStudents = () => {
             name: "",
             email: "",
             username: "",
-            group: "React N32",
+            level: "Middle",
           });
-          navigate("/students");
+          navigate("/teachers");
         }
       }
     } catch (error) {
@@ -88,7 +88,7 @@ const AddStudents = () => {
 
   return (
     <div>
-      <h2 className="text-center text-5xl	my-4">Add Students</h2>
+      <h2 className="text-center text-5xl	my-4">Add Teachers</h2>
       <form
         onSubmit={handleSubmit}
         className="flex max-w-md flex-col gap-4 m-auto"
@@ -136,16 +136,16 @@ const AddStudents = () => {
           )}
         </div>
         <div>
-          <Label htmlFor="group">Group:</Label>
+          <Label htmlFor="group">Level</Label>
           <Select
             id="group"
             name="group"
-            value={formik.values.group}
+            value={formik.values.level}
             onChange={formik.handleChange}
           >
-            <option value="React N32">React N32</option>
-            <option value="React N25">React N25</option>
-            <option value="React N2">React N2</option>
+            <option value=" Junior">Junior</option>
+            <option value="Middle">Middle</option>
+            <option value="Senior">Senior</option>
           </Select>
         </div>
         <Button type="submit">Add Student</Button>
@@ -159,4 +159,4 @@ const AddStudents = () => {
   );
 };
 
-export default AddStudents;
+export default AddTeachers;

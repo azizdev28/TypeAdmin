@@ -9,6 +9,7 @@ import DashSidebar from "./components/DashSidebar";
 import Students from "./pages/Students";
 import Teachers from "./pages/Teachers";
 import AddStudents from "./pages/AddStudents";
+import AddTeachers from "./pages/AddTeachers";
 // import EditStudents from "./pages/EditStudents";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="addstudent" element={<AddStudents />} />
+            <Route path="addteacher" element={<AddTeachers />} />
             {/* <Route path="editstudents" element={<EditStudents />} /> */}
             <Route path="profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />

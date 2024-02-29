@@ -64,6 +64,37 @@
       "username": "tomsmith",
       "email": "tomsmith@gmail.com",
       "level": "senior"
+    },
+    {
+      "id": "602b",
+      "name": "Azizbek",
+      "email": "bayof25625@gmail.com.com",
+      "username": "ID10403",
+      "level": "Middle",
+      "group": " Junior"
+    },
+    {
+      "id": "1378",
+      "name": "Azizbek",
+      "email": "bayof25625@gmail.com.com",
+      "username": "ID10403",
+      "level": "Middle",
+      "group": " Junior"
+    },
+    {
+      "id": "1629",
+      "name": "Aziz",
+      "email": "sarvar@gmail.com",
+      "username": "asdad",
+      "level": "Middle"
+    },
+    {
+      "id": "beaa",
+      "name": "Otabek",
+      "email": "bayof25625@gmail.com.com",
+      "username": "asdasd",
+      "level": "Middle",
+      "group": "Senior"
     }
   ]
 }

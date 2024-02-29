@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button, Select, Table, TextInput } from "flowbite-react";
 import useTeacher from "../app/useTeachers";
 import { TeacherType } from "../types/Teacher.type";
-// import "./Students.css"; // Import CSS file for additional styling
 
 const Teachers: React.FC = () => {
   const { loading, error, teachers, getTeachers } = useTeacher();
@@ -30,10 +29,10 @@ const Teachers: React.FC = () => {
       await fetch(`http://localhost:3000/teachers/${id}`, {
         method: "DELETE",
       });
-      // After successful deletion, fetch updated students list
+      // After successful deletion, fetch updated teachers list
       getTeachers();
     } catch (err) {
-      console.error("Error deleting student:", err);
+      console.error("Error deleting teacher:", err);
     }
   };
 
@@ -42,14 +41,14 @@ const Teachers: React.FC = () => {
     setEditedName(teacher.name);
     setEditedUserName(teacher.username);
     setEditedEmail(teacher.email);
-    setEditedGroup(teacher.group);
+    setEditedGroup(teacher.level);
   };
 
   const saveEditedTeacher = async () => {
     try {
       if (editingTeacher) {
         // Perform update operation
-        await fetch(`http://localhost:3000/teacher/${editingTeacher.id}`, {
+        await fetch(`http://localhost:3000/teachers/${editingTeacher.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -58,25 +57,27 @@ const Teachers: React.FC = () => {
             name: editedName,
             username: editedUserName,
             email: editedEmail,
-            group: editedGroup,
+            level: editedGroup, // Corrected property name from "group" to "level"
           }),
         });
-        // After successful update, fetch updated students list
+        // After successful update, fetch updated teachers list
         getTeachers();
         // Reset editing state
         setEditingTeacher(null);
       }
     } catch (err) {
-      console.error("Error updating student:", err);
+      console.error("Error updating teacher:", err);
     }
   };
 
-  const filteredTeacher = teachers.filter(
+  const filteredTeachers = teachers.filter(
     (teacher: TeacherType) =>
       teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedGroup === "" || teacher.group === selectedGroup)
+      (selectedGroup === "" || teacher.level === selectedGroup)
   );
 
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredTeachers.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredTeachers.slice(
@@ -103,9 +104,9 @@ const Teachers: React.FC = () => {
           className={darkMode ? "dark" : "light"}
         >
           <option value="">All Level</option>
-          <option value="React N32">Junior</option>
-          <option value="React N25">Middle</option>
-          <option value="React N2">Senior</option>
+          <option value="Junior">Junior</option>
+          <option value="Middle">Middle</option>
+          <option value="Senior">Senior</option>
         </Select>
         <Button onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? "Light Mode" : "Dark Mode"}
@@ -168,11 +169,11 @@ const Teachers: React.FC = () => {
                       className={darkMode ? "dark" : "light"}
                     >
                       <option value="Junior">Junior</option>
-                      <option value="Middle">Middile</option>
+                      <option value="Middle">Middle</option>
                       <option value="Senior">Senior</option>
                     </Select>
                   ) : (
-                    teacher.group
+                    teacher.level
                   )}
                 </Table.Cell>
                 <Table.Cell>
@@ -207,11 +208,9 @@ const Teachers: React.FC = () => {
         </Table>
       ) : null}
       <div className="flex justify-center items-center mt-4">
-        {filteredTeacher.length > itemsPerPage && (
+        {totalPages > 1 && (
           <ul className="flex list-none">
-            {Array.from({
-              length: Math.ceil(filteredTeacher.length / itemsPerPage),
-            }).map((_, index) => (
+            {[...Array(totalPages)].map((_, index) => (
               <li key={index} className="mx-1">
                 <button
                   onClick={() => paginate(index + 1)}
@@ -231,8 +230,8 @@ const Teachers: React.FC = () => {
       <Button
         className={`text-center m-auto my-5 ${darkMode ? "dark" : "light"}`}
       >
-        <Link to="/addstudent" className={darkMode ? "dark" : "light"}>
-          Add Student
+        <Link to="/addteacher" className={darkMode ? "dark" : "light"}>
+          Add Teacher
         </Link>
       </Button>
       {error ? <h2>{error.message}</h2> : null}

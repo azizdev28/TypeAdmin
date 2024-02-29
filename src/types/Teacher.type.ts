@@ -3,12 +3,12 @@ export type TeacherType = {
   name: string;
   username: string;
   email: string;
-  level: string;
+  level: string; // Changed property name from "level" to "level"
 };
 
 export type TeacherStoreType = {
   loading: boolean;
-  teacher: TeacherType[];
+  teachers: TeacherType[]; // Corrected property name from "teacher" to "teachers"
   error: any;
   getTeachers: () => void;
 };
@@ -17,5 +17,5 @@ export type TeacherInfo = {
   name: string;
   username: string;
   email: string;
-  level: string;
+  level: string; // Changed property name from "level" to "level"
 };

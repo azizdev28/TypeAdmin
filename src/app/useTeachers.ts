@@ -3,7 +3,7 @@ import { TeacherStoreType } from "../types/Teacher.type";
 
 const useTeacher = create<TeacherStoreType>((set) => ({
   loading: false,
-  teachers: [],
+  teachers: [], // Corrected property name from "students" to "teachers"
   error: null,
   getTeachers: async () => {
     try {
@@ -14,7 +14,7 @@ const useTeacher = create<TeacherStoreType>((set) => ({
       const data = await res.json();
       set(() => ({
         loading: false,
-        students: data,
+        teachers: data,
         error: null,
       }));
     } catch (err: any) {
