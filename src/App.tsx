@@ -10,6 +10,7 @@ import Students from "./pages/Students";
 import Teachers from "./pages/Teachers";
 import AddStudents from "./pages/AddStudents";
 import AddTeachers from "./pages/AddTeachers";
+// import Layout from "./components/Layout/Layout";
 // import EditStudents from "./pages/EditStudents";
 
 const App = () => {
@@ -24,11 +25,11 @@ const App = () => {
             <Route path="students" element={<Students />} />
             <Route path="teachers" element={<Teachers />} />
             <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />} />
             <Route path="addstudent" element={<AddStudents />} />
             <Route path="addteacher" element={<AddTeachers />} />
             {/* <Route path="editstudents" element={<EditStudents />} /> */}
             <Route path="profile" element={<Profile />} />
+            <Route path="login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

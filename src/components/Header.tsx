@@ -17,9 +17,13 @@ const Header = () => {
               inline
               label={<Avatar alt="User settings" img={avatarUrl} rounded />}
             >
-              <Dropdown.Item>Profile</Dropdown.Item>
+              <Link to="/profile">
+                <Dropdown.Item>Profile</Dropdown.Item>
+              </Link>
               <Dropdown.Divider />
-              <Dropdown.Item>Sign out</Dropdown.Item>
+              <Link to="login">
+                <Dropdown.Item>Sign out</Dropdown.Item>
+              </Link>
             </Dropdown>
           ) : (
             <Link to="login">
