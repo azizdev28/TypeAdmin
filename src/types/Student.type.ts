@@ -12,3 +12,10 @@ export type StudentStoreType = {
   error: any;
   getStudents: () => void;
 };
+
+export type StudentInfo = {
+  name: string;
+  username: string;
+  email: string;
+  group: string;
+};

@@ -1,56 +1,88 @@
-import { Button, Label, Select, TextInput } from "flowbite-react";
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { Alert, Button, Label, Select, TextInput } from 'flowbite-react';
+import { useState, FormEvent } from 'react';
+import { StudentInfo } from '../types/Student.type';
+import { useNavigate } from 'react-router-dom';
+import { useFormik, FormikProps } from 'formik';
 
-interface StudentInfo {
-  name: string;
-  username: string;
-  email: string;
-  group: string;
-}
-
-const AddStudents: React.FC = () => {
-  const [studentInfo, setStudentInfo] = useState<StudentInfo>({
-    name: "",
-    username: "",
-    email: "",
-    group: "A", // Default group value
-  });
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setStudentInfo({
-      ...studentInfo,
-      [name]: value,
-    });
+type StudentFormType = {
+  initialValues: StudentInfo;
+  validate: (values: StudentInfo) => {
+    name: string;
+    username: string;
+    email: string;
   };
+  onSubmit: (value: StudentInfo) => void;
+};
+
+const AddStudents = () => {
+  const formik: FormikProps<StudentInfo> = useFormik<StudentInfo>({
+    initialValues: {
+      name: '',
+      email: '',
+      username: '',
+      group: 'React N32',
+    },
+    validate: (values) => {
+      const errors: {
+        name: string;
+        username: string;
+        email: string;
+      } = {
+        name: '',
+        email: '',
+        username: '',
+      };
+      if (values.name === '') {
+        errors.name = 'Name is required';
+      }
+      if (values.email === '') {
+        errors.email = 'Email is required';
+      } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(values.email)) {
+        errors.email = 'Invalid email format';
+      }
+      if (values.username === '') {
+        errors.username = 'Username is required';
+      }
+      return errors;
+    },
+  } as StudentFormType);
+
+  const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/students", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(studentInfo),
-      });
+      if (
+        !formik.values.name ||
+        !formik.values.username ||
+        !formik.values.email
+      ) {
+        setErrorMsg('Please fill all required fields');
+      } else {
+        setErrorMsg('');
+        const response = await fetch('http://localhost:3000/students', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formik.values),
+        });
 
-      if (!response.ok) {
-        throw new Error("Failed to add student");
+        if (!response.ok) {
+          setErrorMsg('Failed to add student');
+        } else {
+          formik.setValues({
+            name: '',
+            email: '',
+            username: '',
+            group: 'React N32',
+          });
+          navigate('/students');
+        }
       }
-
-      console.log("Student added successfully");
-      // Reset form fields
-      setStudentInfo({
-        name: "",
-        username: "",
-        email: "",
-        group: "A",
-      });
     } catch (error) {
-      console.error("Error adding student:");
+      setErrorMsg('Failed to add student');
     }
   };
 
@@ -67,9 +99,13 @@ const AddStudents: React.FC = () => {
             type="text"
             id="name"
             name="name"
-            value={studentInfo.name}
-            onChange={handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.name}
+            onChange={formik.handleChange}
           />
+          {formik.touched.name && formik.errors.name && (
+            <span className="text-red-500 pt-2">{formik.errors.name}</span>
+          )}
         </div>
         <div>
           <label htmlFor="username">Username:</label>
@@ -77,9 +113,13 @@ const AddStudents: React.FC = () => {
             type="text"
             id="username"
             name="username"
-            value={studentInfo.username}
-            onChange={handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.username}
+            onChange={formik.handleChange}
           />
+          {formik.touched.username && formik.errors.username && (
+            <span className="text-red-500 pt-2">{formik.errors.username}</span>
+          )}
         </div>
         <div>
           <label htmlFor="email">Email:</label>
@@ -87,17 +127,21 @@ const AddStudents: React.FC = () => {
             type="email"
             id="email"
             name="email"
-            value={studentInfo.email}
-            onChange={handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
+            onChange={formik.handleChange}
           />
+          {formik.touched.email && formik.errors.email && (
+            <span className="text-red-500 pt-2">{formik.errors.email}</span>
+          )}
         </div>
         <div>
           <Label htmlFor="group">Group:</Label>
           <Select
             id="group"
             name="group"
-            value={studentInfo.group}
-            onChange={handleChange}
+            value={formik.values.group}
+            onChange={formik.handleChange}
           >
             <option value="React N32">React N32</option>
             <option value="React N25">React N25</option>
@@ -105,6 +149,11 @@ const AddStudents: React.FC = () => {
           </Select>
         </div>
         <Button type="submit">Add Student</Button>
+        {errorMsg && (
+          <Alert color="failure" className="mt-5">
+            {errorMsg}
+          </Alert>
+        )}
       </form>
     </div>
   );

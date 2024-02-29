@@ -13,6 +13,48 @@
       "email": "dasdasd@gmail.com",
       "group": "React N25",
       "id": "5718"
+    },
+    {
+      "id": "0b05",
+      "name": "John Doe",
+      "email": "tim@gmail.com",
+      "username": "johndoe",
+      "group": "React N32"
+    },
+    {
+      "id": "fa82",
+      "name": "Azizdev ",
+      "email": "bayof25625@jalunaki.com",
+      "username": "ID10403",
+      "group": "React N25"
+    },
+    {
+      "id": "61cf",
+      "name": "Azizbek",
+      "email": "dasdasd@gmail.com",
+      "username": "ID10403",
+      "group": "React N2"
+    },
+    {
+      "id": "c680",
+      "name": "Azizbek",
+      "email": "bayof25625@gmail.com.com",
+      "username": "ID10403",
+      "group": "React N32"
+    },
+    {
+      "id": "1ee3",
+      "name": "Azizbek",
+      "email": "sarvar@gmail.com",
+      "username": "asdad",
+      "group": "React N2"
+    },
+    {
+      "id": "4be4",
+      "name": "Aziz",
+      "email": "az1z.bakht1yarvich@gmail.com",
+      "username": "Azizbek",
+      "group": "React N2"
     }
   ],
   "teachers": [
